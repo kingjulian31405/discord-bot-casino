@@ -42,3 +42,11 @@ async def save(ctx):
     with open('amounts.json', 'w+') as f:
         json.dump(amounts, f)
     await ctx.send("everything was save")
+    
+    
+@bot.command(name = 'game')
+async def testing(ctx):
+    users[id] += 2
+    await ctx.send("amount save")
+
+bot.run("NjkwNzAwMjQzNDMxNDU2ODM4.XoPMjg.CvJPW5q2dEiYvFL3o69lbyfdlos")

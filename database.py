@@ -18,15 +18,15 @@ async def on_ready():
 
 @bot.command(name = 'check')
 async def balance(ctx):
-    id = ctx.message.member.user.id
+    id = ctx.message.author.name
     if id in users:
-        await ctx.send("You have {} in your account".format(users[ctx.message.member.user.id]))
+        await ctx.send("You have {} in your account".format(users[ctx.message.author.name]))
     else:
-        await ctx.send("Created a user first")
+        await ctx.send("Register first")
 
 @bot.command(name = 'register')
 async def register(ctx):
-    id = ctx.message.member.user.id
+    id = ctx.message.author.name
     if id not in users:
         users[id] = 100
         await ctx.send("You are now registered")
@@ -47,6 +47,6 @@ async def save(ctx):
 @bot.command(name = 'up')
 async def testing(ctx):
     users[id] += 2
-    await ctx.send("amount save")
+    await ctx.send("up")
 
 bot.run("NjkwNzAwMjQzNDMxNDU2ODM4.XoPMjg.CvJPW5q2dEiYvFL3o69lbyfdlos")

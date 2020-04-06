@@ -16,6 +16,11 @@ class MyClient(discord.Client):
         if message.author.id == self.user.id:
             return
 
+        if message.content.startswith('!casino'):
+            await message.channel.send('1. Dice Roll')
+            await message.channel.send('2. Coin Toss')
+            await message.channel.send('Which game do you want to play?')
+       
         if message.content.startswith('Dice Roll'):
             await message.channel.send('Guess a number between 1 and 6.')
     
@@ -51,6 +56,10 @@ class MyClient(discord.Client):
                 await message.channel.send('You are right!')
             else:
                 await message.channel.send('Oops. It is actually {}.' .format(a))
+
+
+client = MyClient()
+client.run(TOKEN)
 
 client = MyClient()
 client.run(TOKEN)

@@ -36,8 +36,36 @@ class MyClient(discord.Client):
 
             if int(guess.content) == answer:
                 await message.channel.send('You are right!')
+                await message.channel.send('Do you want to play again? Yes or No')
+                def ans(x):
+                    return x.author == message.author and x.content
+                d = 'Yes'
+
+                try:
+                    y = await self.wait_for('message',check=ans, timeout= 30.0)
+                except asyncio. TimeoutError:
+                    return await message.channel.send('Sorry, you took too long!')
+
+                if y.content == d:
+                    await message.channel.send('Which game do you want to play')
+                else:
+                    await message.channel.send('Thank You for playing')
             else:
                 await message.channel.send('Oops. It is actually {}.'.format(answer))
+                await message.channel.send('Do you want to play again? Yes or No')
+                def ans(v):
+                    return v.author == message.author and v.content
+                d = 'Yes'
+
+                try:
+                    z = await self.wait_for('message',check=ans, timeout= 30.0)
+                except asyncio. TimeoutError:
+                    return await message.channel.send('Sorry, you took too long!')
+
+                if z.content == d:
+                    await message.channel.send('Which game do you want to play')
+                else:
+                    await message.channel.send('Thank You for playing')
 
         elif message.content.startswith('Coin Toss'):
             await message.channel.send('Do you want Heads or Tails.')
@@ -54,8 +82,37 @@ class MyClient(discord.Client):
 
             if g.content == a:
                 await message.channel.send('You are right!')
+                await message.channel.send('Do you want to play again? Yes or No')
+                def ans(o):
+                    return o.author == message.author and o.content
+                d = 'Yes'
+
+                try:
+                    f = await self.wait_for('message',check=ans, timeout= 30.0)
+                except asyncio. TimeoutError:
+                    return await message.channel.send('Sorry, you took too long!')
+
+                if f.content == d:
+                    await message.channel.send('Which game do you want to play')
+                else:
+                    await message.channel.send('Thank You for playing')
+
             else:
                 await message.channel.send('Oops. It is actually {}.' .format(a))
+                await message.channel.send('Do you want to play again? Yes or No')
+                def ans(p):
+                    return p.author == message.author and p.content
+                d = 'Yes'
+
+                try:
+                    h = await self.wait_for('message',check=ans, timeout= 30.0)
+                except asyncio. TimeoutError:
+                    return await message.channel.send('Sorry, you took too long!')
+
+                if h.content == d:
+                    await message.channel.send('Which game do you want to play')
+                else:
+                    await message.channel.send('Thank You for playing')
 
 
 client = MyClient()

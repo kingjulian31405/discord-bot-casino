@@ -30,9 +30,7 @@ class MyClient(discord.Client):
             users[ID] = 100
         
         if message.content.startswith('!casino'):
-            await message.channel.send('1. Dice Roll')
-            await message.channel.send('2. Coin Toss')
-            await message.channel.send('Which game do you want to play?')
+            await message.channel.send('Which game do you want to play?[Dice Roll or Coin Toss]')
        
         if message.content.startswith('Dice Roll'):
             await message.channel.send('Guess a number between 1 and 6.')

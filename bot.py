@@ -54,7 +54,7 @@ class MyClient(discord.Client):
                 with open('users.json', 'w+') as f:
                     users[ID] = amount
                     json.dump(users, f)
-                    await message.channel.send(users[ID])
+                    await message.channel.send(str(users[ID])+" points left")
 
             else:
                 await message.channel.send('Oops. It is actually {}.' .format(answer))
@@ -63,7 +63,7 @@ class MyClient(discord.Client):
                 with open('users.json', 'w+') as f:
                     users[ID] = amount
                     json.dump(users, f)
-                    await message.channel.send(users[ID])
+                    await message.channel.send(str(users[ID])+" points left")
 
         elif message.content.startswith('Coin Toss'):
             await message.channel.send('Do you want Heads or Tails.')
@@ -85,7 +85,7 @@ class MyClient(discord.Client):
                 with open('users.json', 'w+') as f:
                     users[ID] = amount
                     json.dump(users, f)
-                    await message.channel.send(users[ID])
+                    await message.channel.send(str(users[ID])+" points left")
 
             else:
                 await message.channel.send('Oops. It is actually {}.' .format(a))
@@ -94,7 +94,7 @@ class MyClient(discord.Client):
                 with open('users.json', 'w+') as f:
                     users[ID] = amount
                     json.dump(users, f)
-                    await message.channel.send(users[ID])
+                    await message.channel.send(str(users[ID])+" points left")
 
 
 client = MyClient()

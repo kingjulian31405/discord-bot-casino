@@ -1,7 +1,9 @@
+
 import discord
 import random
 import asyncio
 import os
+import json
 
 import discord
 from discord.ext import commands
@@ -9,16 +11,24 @@ from dotenv import load_dotenv
 from discord.ext.commands import Bot
 
 load_dotenv()
-token = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_TOKEN')
 Guild = os.getenv('DISCORD_GUILD')
-bot = commands.Bot(command_prefix='!')
 
-class MyClient(discord.Client):
-    async def on_message(self, message):
-
+class MyClient(discord.Client):    
+    async def on_message(self,message):
         if message.author.id == self.user.id:
             return
+        global users
+        if os.path.exists('users.json'):
+            with open('users.json', 'r') as f:
+                users = json.load(f)
+        else:
+            users = {}
 
+        ID = message.author.name
+        if ID not in users:
+            users[ID] = 100
+        
         if message.content.startswith('!casino'):
             await message.channel.send('1. Dice Roll')
             await message.channel.send('2. Coin Toss')
@@ -36,39 +46,24 @@ class MyClient(discord.Client):
                 guess = await self.wait_for('message', check=is_correct, timeout=30.0)
             except asyncio.TimeoutError:
                 return await message.channel.send('Sorry, you took too long it was {}.'.format(answer))
-
+                
             if int(guess.content) == answer:
                 await message.channel.send('You are right!')
-                await message.channel.send('Do you want to play again? Yes or No')
-                def ans(x):
-                    return x.author == message.author and x.content
-                d = 'Yes'
+                ID = message.author.name
+                amount = users[ID] + 50
+                with open('users.json', 'w+') as f:
+                    users[ID] = amount
+                    json.dump(users, f)
+                    await message.channel.send(users[ID])
 
-                try:
-                    y = await self.wait_for('message',check=ans, timeout= 30.0)
-                except asyncio. TimeoutError:
-                    return await message.channel.send('Sorry, you took too long!')
-
-                if y.content == d:
-                    await message.channel.send('Which game do you want to play')
-                else:
-                    await message.channel.send('Thank You for playing')
             else:
-                await message.channel.send('Oops. It is actually {}.'.format(answer))
-                await message.channel.send('Do you want to play again? Yes or No')
-                def ans(v):
-                    return v.author == message.author and v.content
-                d = 'Yes'
-
-                try:
-                    z = await self.wait_for('message',check=ans, timeout= 30.0)
-                except asyncio. TimeoutError:
-                    return await message.channel.send('Sorry, you took too long!')
-
-                if z.content == d:
-                    await message.channel.send('Which game do you want to play')
-                else:
-                    await message.channel.send('Thank You for playing')
+                await message.channel.send('Oops. It is actually {}.' .format(answer))
+                ID = message.author.name
+                amount = users[ID] - 10
+                with open('users.json', 'w+') as f:
+                    users[ID] = amount
+                    json.dump(users, f)
+                    await message.channel.send(users[ID])
 
         elif message.content.startswith('Coin Toss'):
             await message.channel.send('Do you want Heads or Tails.')
@@ -85,38 +80,22 @@ class MyClient(discord.Client):
 
             if g.content == a:
                 await message.channel.send('You are right!')
-                await message.channel.send('Do you want to play again? Yes or No')
-                def ans(o):
-                    return o.author == message.author and o.content
-                d = 'Yes'
-
-                try:
-                    f = await self.wait_for('message',check=ans, timeout= 30.0)
-                except asyncio. TimeoutError:
-                    return await message.channel.send('Sorry, you took too long!')
-
-                if f.content == d:
-                    await message.channel.send('Which game do you want to play')
-                else:
-                    await message.channel.send('Thank You for playing')
+                ID = message.author.name
+                amount = users[ID] + 50
+                with open('users.json', 'w+') as f:
+                    users[ID] = amount
+                    json.dump(users, f)
+                    await message.channel.send(users[ID])
 
             else:
                 await message.channel.send('Oops. It is actually {}.' .format(a))
-                await message.channel.send('Do you want to play again? Yes or No')
-                def ans(p):
-                    return p.author == message.author and p.content
-                d = 'Yes'
-
-                try:
-                    h = await self.wait_for('message',check=ans, timeout= 30.0)
-                except asyncio. TimeoutError:
-                    return await message.channel.send('Sorry, you took too long!')
-
-                if h.content == d:
-                    await message.channel.send('Which game do you want to play')
-                else:
-                    await message.channel.send('Thank You for playing')
+                ID = message.author.name
+                amount = users[ID] - 10
+                with open('users.json', 'w+') as f:
+                    users[ID] = amount
+                    json.dump(users, f)
+                    await message.channel.send(users[ID])
 
 
 client = MyClient()
-client.run(token)
+client.run(TOKEN)

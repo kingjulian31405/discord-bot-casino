@@ -30,7 +30,7 @@ class MyClient(discord.Client):
             users[ID] = 100
         
         if message.content.startswith('!casino'):
-            await message.channel.send('Which game do you want to play?[Dice Roll or Coin Toss]')
+            await message.channel.send('Which game do you want to play? [Dice Roll or Coin Toss]')
        
         if message.content.startswith('Dice Roll'):
             await message.channel.send('Guess a number between 1 and 6.')
@@ -53,6 +53,7 @@ class MyClient(discord.Client):
                     users[ID] = amount
                     json.dump(users, f)
                     await message.channel.send(str(users[ID])+" points left")
+                    await message.channel.send(str(ID)+" Thank You for playing!")
 
             else:
                 await message.channel.send('Oops. It is actually {}.' .format(answer))
@@ -62,6 +63,7 @@ class MyClient(discord.Client):
                     users[ID] = amount
                     json.dump(users, f)
                     await message.channel.send(str(users[ID])+" points left")
+                    await message.channel.send(str(ID)+" Thank You for playing!")
 
         elif message.content.startswith('Coin Toss'):
             await message.channel.send('Do you want Heads or Tails.')
@@ -84,7 +86,7 @@ class MyClient(discord.Client):
                     users[ID] = amount
                     json.dump(users, f)
                     await message.channel.send(str(users[ID])+" points left")
-
+                    await message.channel.send(str(ID)+" Thank You for playing!") 
             else:
                 await message.channel.send('Oops. It is actually {}.' .format(a))
                 ID = message.author.name
@@ -93,6 +95,7 @@ class MyClient(discord.Client):
                     users[ID] = amount
                     json.dump(users, f)
                     await message.channel.send(str(users[ID])+" points left")
+                    await message.channel.send(str(ID)+" Thank You for playing!")
 
 
 client = MyClient()
